@@ -40,10 +40,27 @@ template <typename T1, typename T2> inline void chmax(T1 &a, T2 b) {
 int main() {
   string line;
   ifstream input_file("input.in");
+  int depth = 0, horizontal = 0, aim = 0;
+
 
   while(getline(input_file, line)) {
+    char first_letter = line[0];
+
+    switch (first_letter) {
+      case 'f':
+        horizontal += stoi(line.substr(8));
+        depth += aim * stoi(line.substr(8));
+        break;
+      case 'u':
+        aim -= stoi(line.substr(3));
+        break;
+      case 'd':
+        aim += stoi(line.substr(5));
+        break;
+    }
   }
 
+  cout << depth * horizontal;
 
   input_file.close();
 }

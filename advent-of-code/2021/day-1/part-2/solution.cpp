@@ -40,9 +40,29 @@ template <typename T1, typename T2> inline void chmax(T1 &a, T2 b) {
 int main() {
   string line;
   ifstream input_file("input.in");
+  int curr = 0, prev = 0, count = 0;
+  vector<int> v;
 
   while(getline(input_file, line)) {
+    v.push_back(stoi(line));
+  }
+
+  for (int i = 0; i <= int(v.size()) - 3; i++) {
+    if (i == 0) {
+      prev = v[i] + v[i+1] + v[i+2];
+      continue;
+    }
+
+    curr = v[i] + v[i+1] + v[i+2];
+
+    if (prev < curr) {
+      count++;
+    }
+
+    prev = curr;
   }
 
   input_file.close();
+
+  cout << count;
 }

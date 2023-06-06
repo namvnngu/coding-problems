@@ -40,24 +40,22 @@ int main() {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
 
-  long n;
+  string s;
 
-  cin >> n;
+  cin >> s;
 
-  if (n == 1) {
-    cout << n << ' ';
-    return 0;
-  }
+  char selected = s[0];
+  int count = 1, res = 1;
 
-  cout << n << ' ';
-
-  while (n != 1) {
-    if (n & 1) {
-      n = n * 3 + 1;
+  for (int i = 1; i < int(s.length()); i++) {
+    if (s[i] == selected) {
+      count++;
+      res = max(res, count);
     } else {
-      n /= 2;
+      selected = s[i];
+      count = 1;
     }
-
-    cout << n << ' ';
   }
+
+  cout << res;
 }

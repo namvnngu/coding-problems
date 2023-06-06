@@ -40,24 +40,15 @@ int main() {
   ios_base::sync_with_stdio(false);
   cin.tie(0);
 
-  long n;
-
+  long long n, m, res;
   cin >> n;
 
-  if (n == 1) {
-    cout << n << ' ';
-    return 0;
+  res = (n + 1) * n / 2;
+
+  for (long i = 0; i < n - 1; i++) {
+    cin >> m;
+    res -= m;
   }
 
-  cout << n << ' ';
-
-  while (n != 1) {
-    if (n & 1) {
-      n = n * 3 + 1;
-    } else {
-      n /= 2;
-    }
-
-    cout << n << ' ';
-  }
+  cout << res;
 }

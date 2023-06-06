@@ -12,7 +12,7 @@
         <img src="https://img.shields.io/badge/-LeetCode-yellowgreen" style="margin: 0 2.5px">
     </a>
     <a href="https://codingcompetitions.withgoogle.com/" target="_blank">
-        <img src="https://img.shields.io/badge/-Google-success" style="margin: 0 2.5px">
+        <img src="https://img.shields.io/badge/-Google-red" style="margin: 0 2.5px">
     </a>
     <a href="https://binarysearch.com/" target="_blank">
         <img src="https://img.shields.io/badge/-Binary-yellow" style="margin: 0 2.5px">
@@ -20,13 +20,16 @@
     <a href="https://www.hackerearth.com/" target="_blank">
         <img src="https://img.shields.io/badge/-HackerEarth-9cf" style="margin: 0 2.5px">
     </a>
+    <a href="https://adventofcode.com/" target="_blank">
+        <img src="https://img.shields.io/badge/-Advent of Code-00cc00" style="margin: 0 2.5px">
+    </a>
 </p>
 
-Hi. Welcome to my `collection` of problems that I solved on several online programming competitive platforms.
+Hi. Welcome to my collection of coding problems that I solved on several online programming platforms.
 
-This `repository` takes snapshots of my progress of practicing DnA problems and attending online contests.
+This repository takes snapshots of my progress of practicing coding problems and attending online contests.
 
-This repository is welcome to all contributions. If you find out any mistake or want to improve any implementations or solutions, please free to pull requests. :star:
+This repository is welcome to all contributions. If you find out any mistakes or would like to improve any implementations or solutions, please free to amke any pull requests. :star:
 
 Made by Nam with ❤️
 

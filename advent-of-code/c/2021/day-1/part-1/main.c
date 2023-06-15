@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
 
 int main() {
   FILE* fp = fopen("input.txt", "r");
@@ -6,10 +8,17 @@ int main() {
     printf("Not able to open input.txt");
   }
 
-  char line[10];
-  while(fgets(line, 10, fp)) {
-    print("%s", line);
+  int count = 0;
+  char line[100];
+  int prev = INT_MAX;
+
+  while(fgets(line, 100, fp)) {
+    int curr = atoi(line);
+    if(curr > prev) count++;
+    prev = curr;
   }
+
+  printf("Answer: %d\n", count);
 
   fclose(fp);
 

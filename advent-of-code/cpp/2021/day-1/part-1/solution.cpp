@@ -9,7 +9,8 @@
 #include <list>
 #include <map>
 #include <math.h>
-#include <numeric> #include <queue>
+#include <numeric>
+#include <queue>
 #include <set>
 #include <sstream>
 #include <stack>

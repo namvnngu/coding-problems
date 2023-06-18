@@ -8,17 +8,15 @@ int main(void) {
     printf("Not able to open input.txt");
   }
 
-  int count = 0;
+  int result = 0;
   char line[100];
-  int prev = INT_MAX;
 
   while(fgets(line, 100, fp)) {
-    int curr = atoi(line);
-    if(curr > prev) count++;
-    prev = curr;
+    printf("%s", line);
+    result++;
   }
 
-  printf("Answer: %d\n", count);
+  printf("Answer: %d\n", result);
 
   fclose(fp);
 

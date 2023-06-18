@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main() {
+int main(void) {
   FILE* fp = fopen("input.txt", "r");
   if(fp == NULL) {
     printf("Not able to open input.txt");

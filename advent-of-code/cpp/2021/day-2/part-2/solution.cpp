@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <bitset>
 #include <deque>
+#include <fstream>
 #include <functional>
 #include <iostream>
 #include <iterator>
@@ -23,7 +24,6 @@
 #include <unordered_set>
 #include <utility>
 #include <vector>
-#include <fstream>
 using namespace std;
 
 template <typename T1, typename T2> inline void chmin(T1 &a, T2 b) {
@@ -42,8 +42,7 @@ int main() {
   ifstream input_file("input.in");
   int depth = 0, horizontal = 0, aim = 0;
 
-
-  while(getline(input_file, line)) {
+  while (getline(input_file, line)) {
     char first_letter = line[0];
 
     switch (first_letter) {
@@ -57,7 +56,7 @@ int main() {
       case 'd':
         aim += stoi(line.substr(5));
         break;
-    }
+      }
   }
 
   cout << depth * horizontal;

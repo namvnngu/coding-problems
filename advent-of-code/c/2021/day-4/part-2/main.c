@@ -79,6 +79,9 @@ int main(void) {
   int last_called_number = 0;
   int unmarked_sum = 0;
   int bingo = 0;
+  int total_boards = total_board_rows_count / BOARD_SIZE;
+  int boards_has_bingo[total_boards];
+  memset(boards_has_bingo, 0, total_boards * sizeof(int));
 
   for (int n = 0; n < numbers_count; n++) {
     last_called_number = numbers[n];
@@ -105,13 +108,21 @@ int main(void) {
           }
           if (!bingo && (vertical_bingo || horizontal_bingo)) {
             bingo = 1;
+            boards_has_bingo[((r + 1) / BOARD_SIZE) - 1] = 1;
           }
         }
 
         if (bingo) {
-          goto jump;
+          int bingo_board_count = 0;
+          for (int i = 0; i < total_boards; i++) {
+            bingo_board_count = bingo_board_count + boards_has_bingo[i];
+          }
+          if (bingo_board_count == total_boards) {
+            goto jump;
+          }
         }
 
+        bingo = 0;
         unmarked_sum = 0;
       }
     }

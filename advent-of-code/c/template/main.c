@@ -11,7 +11,7 @@ int main(void) {
   int result = 0;
   char line[100];
 
-  while (fgets(line, 100, fp)) {
+  for (int row = 0; fgets(line, sizeof(line), fp); row++) {
     printf("%s", line);
     result++;
   }

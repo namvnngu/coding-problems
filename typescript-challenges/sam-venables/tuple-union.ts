@@ -74,10 +74,9 @@ export type ObjectUnion<
   T2 extends Record<any, any>,
 > =
   // just the common keys
-  {
-    [K in keyof (T1 | T2)]: (T1 | T2)[K];
-  } & // combined with partials of the non-overlapping keys
-  Partial<Omit<T1, keyof T1 & keyof T2> & Omit<T2, keyof T1 & keyof T2>>;
+  { [K in keyof (T1 | T2)]: (T1 | T2)[K] } & Partial< // combined with partials of the non-overlapping keys
+    Omit<T1, keyof T1 & keyof T2> & Omit<T2, keyof T1 & keyof T2>
+  >;
 
 type Sam_TupleUnion<T1 extends any[], T2 extends any[]> = ObjectToTuple<
   ObjectUnion<TupleToObject<T1>, TupleToObject<T2>>

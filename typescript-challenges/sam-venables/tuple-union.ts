@@ -23,12 +23,7 @@ type TupleUnion<
   Result extends any[] = [],
 > = Result["length"] extends Bigger["length"]
   ? Result
-  : TupleUnion<
-      T1,
-      T2,
-      Bigger,
-      [...Result, T1[Result["length"]] | T2[Result["length"]]]
-    >;
+  : TupleUnion<T1, T2, Bigger, [...Result, T1[Result["length"]] | T2[Result["length"]]]>;
 
 type _CONSTANT = "X";
 type BiggerArray<T1 extends any[], T2 extends any[]> = ArrayOfN<

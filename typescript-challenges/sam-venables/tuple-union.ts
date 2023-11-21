@@ -16,30 +16,32 @@
 /**
  * My solution
  */
-type TupleUnion<
+type TupleUnion<T1 extends any[], T2 extends any[]> = _BuildTupleUnion<T1, T2>;
+
+type _BuildTupleUnion<
   T1 extends any[],
   T2 extends any[],
   Bigger extends any[] = BiggerArray<T1, T2>,
-  Result extends any[] = [],
+  Result extends any[] = []
 > = Result["length"] extends Bigger["length"]
   ? Result
-  : TupleUnion<T1, T2, Bigger, [...Result, T1[Result["length"]] | T2[Result["length"]]]>;
+  : _BuildTupleUnion<T1, T2, Bigger, [...Result, T1[Result["length"]] | T2[Result["length"]]]>;
 
-type _CONSTANT = "X";
+type CONSTANT = "X";
 type BiggerArray<T1 extends any[], T2 extends any[]> = ArrayOfN<
   T1["length"]
-> extends [...ArrayOfN<T2["length"]>, ..._CONSTANT[]]
+> extends [...ArrayOfN<T2["length"]>, ...CONSTANT[]]
   ? T1
   : T2;
 type ArrayOfN<
   N extends number,
-  Result extends _CONSTANT[] = [],
-> = Result["length"] extends N ? Result : ArrayOfN<N, [...Result, _CONSTANT]>;
+  Result extends CONSTANT[] = []
+> = Result["length"] extends N ? Result : ArrayOfN<N, [...Result, CONSTANT]>;
 
 // same length
-export type Test1 = TupleUnion<[string, boolean], [number, number]>; // [string | number, boolean | number]
+type Test1 = TupleUnion<[string, boolean], [number, number]>; // [string | number, boolean | number]
 // different lengths
-export type Test2 = TupleUnion<["first", "second"], [2, 4, 6, 8]>; // ['first' | 2, 'second' | 4, undefined | 6, undefined | 8]
+type Test2 = TupleUnion<["first", "second"], [2, 4, 6, 8]>; // ['first' | 2, 'second' | 4, undefined | 6, undefined | 8]
 
 /**
  * Sam's solution

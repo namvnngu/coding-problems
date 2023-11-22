@@ -4,26 +4,15 @@
   </a>
 </div>
 
-[![Warm up](https://img.shields.io/badge/-Warm_up-teal)](https://github.com/nnfunny/type-challenges/tree/main/warm-up) <br/>
-  [![Hello World](https://img.shields.io/badge/-Hello_World-teal?logo=Checkmarx&logoColor=white)](https://github.com/nnfunny/type-challenges/blob/main/warm-up/hello-world.ts)
+[![Warm up](https://img.shields.io/badge/warm--up-1-teal)](https://github.com/nnfunny/type-challenges/tree/main/warm-up) <br/>
+  [![Hello World](https://img.shields.io/badge/-13%E3%83%BBHello%20World-teal)](https://github.com/namvnngu/coding-problems/blob/main/typescript-challenges/type-challenges/warm-up/hello-world.ts)
 
-![Easy](https://img.shields.io/badge/-Easy-7aad0c) <br/>
+![Easy](https://img.shields.io/badge/easy-13-7aad0c) <br/>
   ![Pick](https://img.shields.io/badge/-Pick-7aad0c)
   ![Readonly](https://img.shields.io/badge/-Readonly-7aad0c)
-  ![Tuple To Union](https://img.shields.io/badge/-Tuple_To_Union-7aad0c)
-  ![First of Array](https://img.shields.io/badge/-First_of_Array-7aad0c)
-  ![Length of Tuple](https://img.shields.io/badge/-Pick-7aad0c)
-  ![Exclude](https://img.shields.io/badge/-Exclude-7aad0c)
-  ![Awaited](https://img.shields.io/badge/-Awaited-7aad0c)
-  ![If](https://img.shields.io/badge/-If-7aad0c)
-  ![Concat](https://img.shields.io/badge/-Concat-7aad0c)
-  ![Includes](https://img.shields.io/badge/-Includes-7aad0c)
-  ![Push](https://img.shields.io/badge/-Push-7aad0c)
-  ![Unshift](https://img.shields.io/badge/-Unshift-7aad0c)
-  ![Parameters](https://img.shields.io/badge/-Parameters-7aad0c)
 
-![Medium](https://img.shields.io/badge/-Medium-d9901a) <br/>
+![Medium](https://img.shields.io/badge/medium-95-d9901a) <br/>
 
-![Hard](https://img.shields.io/badge/-Hard-de3d37) <br/>
+![Hard](https://img.shields.io/badge/hard-47-de3d37) <br/>
 
-![Extreme](https://img.shields.io/badge/-Extreme-b11b8d) <br/>
+![Extreme](https://img.shields.io/badge/extreme-14-b11b8d) <br/>

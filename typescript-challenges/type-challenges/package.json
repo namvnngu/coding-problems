@@ -1,0 +1,10 @@
+{
+  "name": "type-challenges",
+  "version": "1.0.0",
+  "description": "Solutions for Typescript type challenges",
+  "author": "nguyenvietnam2401@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "@type-challenges/utils": "^0.1.1"
+  }
+}

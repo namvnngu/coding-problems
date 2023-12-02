@@ -6,8 +6,17 @@ const lineReader = createInterface({
   rlfDelay: Infinity,
 });
 
+const reverseString = (str) => {
+  let r = "";
+  for (let i = str.length - 1; i >= 0; i--) {
+    r += str[i];
+  }
+  return r;
+};
+
 const numbers = [];
-const stringDigits = {
+
+const strDigits = {
   one: 1,
   two: 2,
   three: 3,
@@ -18,28 +27,30 @@ const stringDigits = {
   eight: 8,
   nine: 9,
 };
-const reversedStringDigits = Object.fromEntries(
-  Object.entries(stringDigits).map(([k, v]) => [
-    k.split("").reverse().join(""),
-    v,
-  ]),
-);
-const stringDigitsRegex = new RegExp(Object.keys(stringDigits).join("|"));
-const reversedStringDigitsRegex = new RegExp(
-  Object.keys(reversedStringDigits).join("|"),
-);
+const strDigitsRegex = new RegExp(Object.keys(strDigits).join("|"));
+
+const revStrDigits = {
+  eno: 1,
+  owt: 2,
+  eerht: 3,
+  ruof: 4,
+  evif: 5,
+  xis: 6,
+  neves: 7,
+  thgie: 8,
+  enin: 9,
+};
+const revStrDigitsRegex = new RegExp(Object.keys(revStrDigits).join("|"));
 
 lineReader.on("line", function (line) {
-  const modifiedLine = line.replace(stringDigitsRegex, function (match) {
-    return stringDigits[match];
-  });
-  const reversedModifiedLine = line
-    .split("")
-    .reverse()
-    .join("")
-    .replace(reversedStringDigitsRegex, function (match) {
-      return reversedStringDigits[match];
-    });
+  const modifiedLine = line.replace(
+    strDigitsRegex,
+    (match) => strDigits[match],
+  );
+  const revModifiedLine = reverseString(line).replace(
+    revStrDigitsRegex,
+    (match) => revStrDigits[match],
+  );
 
   let firstDigit;
   let lastDigit;
@@ -53,7 +64,7 @@ lineReader.on("line", function (line) {
     }
 
     if (!lastDigit) {
-      const num = Number(reversedModifiedLine[i]);
+      const num = Number(revModifiedLine[i]);
       if (!Number.isNaN(num)) {
         lastDigit = num;
       }
@@ -67,5 +78,7 @@ lineReader.on("line", function (line) {
 });
 
 lineReader.on("close", function () {
-  console.log(numbers.reduce((accumulator, curr) => accumulator + curr, 0));
+  console.log(
+    numbers.reduce((accumulator, curr) => accumulator + curr, 0),
+  );
 });

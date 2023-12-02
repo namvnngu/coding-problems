@@ -1,19 +1,6 @@
 import { createInterface } from "readline";
 import { createReadStream } from "fs";
 
-const lineReader = createInterface({
-  input: createReadStream("input.txt"),
-  rlfDelay: Infinity,
-});
-
-const reverseString = (str) => {
-  let r = "";
-  for (let i = str.length - 1; i >= 0; i--) {
-    r += str[i];
-  }
-  return r;
-};
-
 const numbers = [];
 
 const strDigits = {
@@ -41,6 +28,11 @@ const revStrDigits = {
   enin: 9,
 };
 const revStrDigitsRegex = new RegExp(Object.keys(revStrDigits).join("|"));
+
+const lineReader = createInterface({
+  input: createReadStream("input.txt"),
+  rlfDelay: Infinity,
+});
 
 lineReader.on("line", function (line) {
   const modifiedLine = line.replace(
@@ -78,7 +70,13 @@ lineReader.on("line", function (line) {
 });
 
 lineReader.on("close", function () {
-  console.log(
-    numbers.reduce((accumulator, curr) => accumulator + curr, 0),
-  );
+  console.log(numbers.reduce((accumulator, curr) => accumulator + curr, 0));
 });
+
+function reverseString(str) {
+  let r = "";
+  for (let i = str.length - 1; i >= 0; i--) {
+    r += str[i];
+  }
+  return r;
+}

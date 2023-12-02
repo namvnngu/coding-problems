@@ -16,3 +16,7 @@ lineReader.on("line", function (line) {
 lineReader.on("close", function () {
   console.log("Result:");
 });
+
+function sum(numbers) {
+  return numbers.reduce((accumulator, curr) => accumulator + curr, 0);
+}

@@ -34,5 +34,8 @@ lineReader.on("line", function (line) {
 });
 
 lineReader.on("close", function () {
-  console.log(numbers.reduce((accumulator, curr) => accumulator + curr, 0));
+  console.log(
+    "Result:",
+    numbers.reduce((accumulator, curr) => accumulator + curr, 0),
+  );
 });

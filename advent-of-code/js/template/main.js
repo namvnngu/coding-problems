@@ -13,4 +13,6 @@ lineReader.on("line", function (line) {
   console.log(`${lineNumber}. ${line}`);
 });
 
-lineReader.on("close", function () {});
+lineReader.on("close", function () {
+  console.log("Result:");
+});

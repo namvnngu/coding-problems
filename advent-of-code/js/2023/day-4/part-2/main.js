@@ -13,6 +13,11 @@ let scratchcards = {};
 lineReader.on("line", function (line) {
   cardNumber++;
 
+  scratchcards[cardNumber] ??= 0;
+  scratchcards[cardNumber] += 1;
+
+  result += 1;
+
   const card = line.split(":")[1].trim().split("|");
   const winningNumbers = card[0].trim().split(/\s+/);
   const myNumbers = card[1].trim().split(/\s+/);
@@ -21,25 +26,19 @@ lineReader.on("line", function (line) {
   for (const myNumber of myNumbers) {
     if (winningNumbers.includes(myNumber)) {
       matchingNumberCount++;
+
+      scratchcards[cardNumber + matchingNumberCount] ??= 0;
+      scratchcards[cardNumber + matchingNumberCount] +=
+        scratchcards[cardNumber];
+
+      result += scratchcards[cardNumber];
     }
-  }
-
-  scratchcards[cardNumber] ??= 0;
-  scratchcards[cardNumber] += 1;
-  result += 1;
-
-  if (matchingNumberCount === 0) return;
-
-  for (let i = cardNumber + 1; i <= cardNumber + matchingNumberCount; i++) {
-    scratchcards[i] ??= 0;
-    scratchcards[i] += scratchcards[cardNumber];
-    result += scratchcards[cardNumber];
   }
 });
 
 lineReader.on("close", function () {
   console.log("Result:", result);
-  console.log(scratchcards);
+  // console.log(scratchcards);
 });
 
 function sum(numbers) {

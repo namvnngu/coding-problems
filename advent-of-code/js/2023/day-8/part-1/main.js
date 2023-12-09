@@ -21,8 +21,8 @@ lineReader.on("line", function (line) {
   const split = line.split(" = ");
   const node = split[0];
   const linkNodes = split[1].split(", ");
-  const leftNode = linkNodes[0].substr(1, 3);
-  const rightNode = linkNodes[1].substr(0, 3);
+  const leftNode = linkNodes[0].substring(1, 4);
+  const rightNode = linkNodes[1].substring(0, 3);
 
   graph[node] = { L: leftNode, R: rightNode };
 });

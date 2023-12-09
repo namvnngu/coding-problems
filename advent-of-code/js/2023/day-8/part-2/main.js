@@ -3,7 +3,6 @@ import { createReadStream } from "fs";
 
 const graph = {};
 let startNodes = [];
-let endNodes = [];
 let instructions = "";
 
 const lineReader = createInterface({
@@ -29,9 +28,6 @@ lineReader.on("line", function (line) {
   graph[node] = { L: leftNode, R: rightNode };
   if (node[2] === "A") {
     startNodes.push(node);
-  }
-  if (node[2] === "Z") {
-    endNodes.push(node);
   }
 });
 

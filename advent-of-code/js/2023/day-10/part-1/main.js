@@ -1,5 +1,18 @@
 import { readFileSync } from "fs";
 
+const COLORS = {
+  BLACK: "\x1b[30m",
+  RED: "\x1b[31m",
+  GREEN: "\x1b[32m",
+  YELLOW: "\x1b[33m",
+  BLUE: "\x1b[34m",
+  MAGENTA: "\x1b[35m",
+  CYAN: "\x1b[36m",
+  WHITE: "\x1b[37m",
+  GRAY: "\x1b[90m",
+  RESET: "\x1b[0m",
+};
+
 const data = readFileSync("input.txt", "utf8").split("\n");
 data.pop();
 
@@ -32,13 +45,15 @@ startCell.visited = true;
 
 while (queue.length !== 0) {
   const cell = queue.shift();
-  result = cell.distance;
 
-  for (const neighbor of getNeighbors(cell, grid)) {
-    if (neighbor.visited) continue;
-    neighbor.visited = true;
-    neighbor.distance = cell.distance + 1;
-    queue.push(neighbor);
+  for (const child of getChildren(cell, grid)) {
+    if (child.visited) continue;
+    if (child.pipe === "S") {
+      console.log("Loop", cell);
+    }
+    child.visited = true;
+    child.distance = cell.distance + 1;
+    queue.push(child);
   }
 }
 //#endregion BFS
@@ -56,62 +71,77 @@ function createCell(pipe, row, col) {
   };
 }
 
-function getNeighbors(cell, grid) {
-  const neighbors = [];
+function getChildren(cell, grid) {
+  const children = [];
   const { row, col, pipe } = cell;
 
   switch (pipe) {
     case "|": {
-      grid[row - 1]?.[col] && neighbors.push(grid[row - 1][col]);
-      grid[row + 1]?.[col] && neighbors.push(grid[row + 1][col]);
+      grid[row - 1]?.[col] && children.push(grid[row - 1][col]);
+      grid[row + 1]?.[col] && children.push(grid[row + 1][col]);
       break;
     }
     case "-": {
-      grid[row]?.[col + 1] && neighbors.push(grid[row][col + 1]);
-      grid[row]?.[col - 1] && neighbors.push(grid[row][col - 1]);
+      grid[row]?.[col + 1] && children.push(grid[row][col + 1]);
+      grid[row]?.[col - 1] && children.push(grid[row][col - 1]);
       break;
     }
     case "L": {
-      grid[row - 1]?.[col] && neighbors.push(grid[row - 1][col]);
-      grid[row]?.[col + 1] && neighbors.push(grid[row][col + 1]);
+      grid[row - 1]?.[col] && children.push(grid[row - 1][col]);
+      grid[row]?.[col + 1] && children.push(grid[row][col + 1]);
       break;
     }
     case "J": {
-      grid[row - 1]?.[col] && neighbors.push(grid[row - 1][col]);
-      grid[row]?.[col - 1] && neighbors.push(grid[row][col - 1]);
+      grid[row - 1]?.[col] && children.push(grid[row - 1][col]);
+      grid[row]?.[col - 1] && children.push(grid[row][col - 1]);
       break;
     }
     case "7": {
-      grid[row + 1]?.[col] && neighbors.push(grid[row + 1][col]);
-      grid[row]?.[col - 1] && neighbors.push(grid[row][col - 1]);
+      grid[row + 1]?.[col] && children.push(grid[row + 1][col]);
+      grid[row]?.[col - 1] && children.push(grid[row][col - 1]);
       break;
     }
     case "F": {
-      grid[row + 1]?.[col] && neighbors.push(grid[row + 1][col]);
-      grid[row]?.[col + 1] && neighbors.push(grid[row][col + 1]);
+      grid[row + 1]?.[col] && children.push(grid[row + 1][col]);
+      grid[row]?.[col + 1] && children.push(grid[row][col + 1]);
       break;
     }
     case "S": {
-      grid[row + 1]?.[col] && neighbors.push(grid[row + 1][col]);
-      grid[row - 1]?.[col] && neighbors.push(grid[row - 1][col]);
-      grid[row]?.[col + 1] && neighbors.push(grid[row][col + 1]);
-      grid[row]?.[col - 1] && neighbors.push(grid[row][col - 1]);
+      grid[row + 1]?.[col] && children.push(grid[row + 1][col]);
+      grid[row - 1]?.[col] && children.push(grid[row - 1][col]);
+      grid[row]?.[col + 1] && children.push(grid[row][col + 1]);
+      grid[row]?.[col - 1] && children.push(grid[row][col - 1]);
       break;
     }
   }
 
-  return neighbors;
+  return children;
 }
 
 function printGrid(grid) {
-  let s = "";
+  const C = [
+    COLORS.RED,
+    COLORS.YELLOW,
+    COLORS.GREEN,
+    COLORS.BLUE,
+    COLORS.CYAN,
+    COLORS.MAGENTA,
+  ];
   for (let r = 0; r < grid.length; r++) {
+    let colors = "";
+    const str = [];
     for (let c = 0; c < grid[0].length; c++) {
       const cell = grid[r][c];
-      s += cell.pipe !== "." ? cell.distance : ".";
-      s += " ";
+
+      if (cell.pipe === "S" || cell.pipe === "." || !cell.visited) {
+        colors += `${COLORS.BLACK}%s${COLORS.RESET}`;
+        str.push(cell.pipe);
+        continue;
+      }
+
+      colors += `${C[(cell.distance - 1) % C.length]}%s${COLORS.RESET}`;
+      str.push(cell.pipe);
     }
-    s += "\n";
+    console.log(colors, ...str);
   }
-  console.log(s);
 }

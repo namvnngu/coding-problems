@@ -1,7 +1,6 @@
 import { readFileSync } from "fs";
 
 const COLORS = {
-  BLACK: "\x1b[30m",
   RED: "\x1b[31m",
   GREEN: "\x1b[32m",
   YELLOW: "\x1b[33m",
@@ -10,14 +9,15 @@ const COLORS = {
   CYAN: "\x1b[36m",
   WHITE: "\x1b[37m",
   GRAY: "\x1b[90m",
+  BLACK: "\x1b[30m",
   RESET: "\x1b[0m",
 };
 
 const data = readFileSync("input.txt", "utf8").split("\n");
 data.pop();
 
-const { startPoint, grid } = (() => {
-  let startPoint;
+const { startCell, grid } = (() => {
+  let startCell;
   const grid = [];
 
   for (let r = 0; r < data.length; r++) {
@@ -25,39 +25,39 @@ const { startPoint, grid } = (() => {
     for (let c = 0; c < data[0].length; c++) {
       const pipe = data[r][c];
       row.push(createCell(pipe, r, c));
-      if (!startPoint && pipe === "S") {
-        startPoint = { row: r, col: c };
+      if (!startCell && pipe === "S") {
+        startCell = row[row.length - 1];
       }
     }
     grid.push(row);
   }
 
-  return { startPoint, grid };
+  return { startCell, grid };
 })();
 
 //#region BFS
 let result = 0;
-const queue = [];
+const queue = [startCell];
 
-const startCell = grid[startPoint.row][startPoint.col];
-queue.push(startCell);
 startCell.visited = true;
 
 while (queue.length !== 0) {
-  const cell = queue.shift();
+  const parent = queue.shift();
 
-  result = Math.max(result, cell.distance);
+  result = Math.max(result, parent.distance);
 
-  for (const child of getChildren(cell, grid)) {
+  for (const child of getChildren(parent, grid)) {
     if (child.visited) continue;
+
+    parent.next.push(child);
     child.visited = true;
-    child.distance = cell.distance + 1;
+    child.distance = parent.distance + 1;
     queue.push(child);
   }
 }
 //#endregion BFS
 
-// printGrid(grid);
+// printGrid(startCell, grid);
 console.log("Result:", result);
 
 function createCell(pipe, row, col) {
@@ -67,6 +67,7 @@ function createCell(pipe, row, col) {
     col,
     visited: false,
     distance: 0,
+    next: [],
   };
 }
 
@@ -199,8 +200,8 @@ function getNextCell(direction, row, col, grid) {
   return undefined;
 }
 
-function printGrid(grid) {
-  const C = [
+function printGrid(startCell, grid) {
+  const PATH_COLORS = [
     COLORS.RED,
     COLORS.YELLOW,
     COLORS.GREEN,
@@ -208,22 +209,44 @@ function printGrid(grid) {
     COLORS.CYAN,
     COLORS.MAGENTA,
   ];
+  const paths = getPaths(startCell, grid);
   for (let r = 0; r < grid.length; r++) {
     let colors = "";
     const str = [];
     for (let c = 0; c < grid[0].length; c++) {
+      let found = false;
       const cell = grid[r][c];
 
-      if (cell.pipe === "S" || cell.pipe === "." || !cell.visited) {
-        colors += `${COLORS.BLACK}%s${COLORS.RESET}`;
+      for (let i = 0; i < paths.length; i++) {
+        if (!paths[i].find((c) => c === cell)) continue;
+        found = true;
+        colors += `${PATH_COLORS[i % PATH_COLORS.length]}%s${COLORS.RESET}`;
         str.push(cell.pipe);
-        continue;
+        break;
       }
 
-      colors += `${C[(cell.distance - 1) % C.length]}%s${COLORS.RESET}`;
-      // colors += `${COLORS.RED}%s${COLORS.RESET}`;
-      str.push(cell.distance);
+      if (found) continue;
+
+      colors += `${COLORS.BLACK}%s${COLORS.RESET}`;
+      str.push(cell.pipe);
     }
     console.log(colors, ...str);
   }
+}
+
+function getPaths(startCell, grid) {
+  const paths = [];
+  const children = getChildren(startCell, grid);
+
+  for (const child of children) {
+    let curr = child;
+    const path = [startCell, curr];
+
+    while (curr.next.length !== 0) {
+      curr = curr.next[0];
+      path.push(curr);
+    }
+    paths.push(path);
+  }
+  return paths;
 }

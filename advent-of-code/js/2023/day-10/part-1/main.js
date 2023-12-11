@@ -46,11 +46,10 @@ startCell.visited = true;
 while (queue.length !== 0) {
   const cell = queue.shift();
 
+  result = Math.max(result, cell.distance);
+
   for (const child of getChildren(cell, grid)) {
     if (child.visited) continue;
-    if (child.pipe === "S") {
-      console.log("Loop", cell);
-    }
     child.visited = true;
     child.distance = cell.distance + 1;
     queue.push(child);
@@ -77,45 +76,127 @@ function getChildren(cell, grid) {
 
   switch (pipe) {
     case "|": {
-      grid[row - 1]?.[col] && children.push(grid[row - 1][col]);
-      grid[row + 1]?.[col] && children.push(grid[row + 1][col]);
+      const up = getNextCell("UP", row, col, grid);
+      up && children.push(up);
+
+      const down = getNextCell("DOWN", row, col, grid);
+      down && children.push(down);
+
       break;
     }
     case "-": {
-      grid[row]?.[col + 1] && children.push(grid[row][col + 1]);
-      grid[row]?.[col - 1] && children.push(grid[row][col - 1]);
+      const left = getNextCell("LEFT", row, col, grid);
+      left && children.push(left);
+
+      const right = getNextCell("RIGHT", row, col, grid);
+      right && children.push(right);
+
       break;
     }
     case "L": {
-      grid[row - 1]?.[col] && children.push(grid[row - 1][col]);
-      grid[row]?.[col + 1] && children.push(grid[row][col + 1]);
+      const up = getNextCell("UP", row, col, grid);
+      up && children.push(up);
+
+      const right = getNextCell("RIGHT", row, col, grid);
+      right && children.push(right);
+
       break;
     }
     case "J": {
-      grid[row - 1]?.[col] && children.push(grid[row - 1][col]);
-      grid[row]?.[col - 1] && children.push(grid[row][col - 1]);
+      const up = getNextCell("UP", row, col, grid);
+      up && children.push(up);
+
+      const left = getNextCell("LEFT", row, col, grid);
+      left && children.push(left);
+
       break;
     }
     case "7": {
-      grid[row + 1]?.[col] && children.push(grid[row + 1][col]);
-      grid[row]?.[col - 1] && children.push(grid[row][col - 1]);
+      const down = getNextCell("DOWN", row, col, grid);
+      down && children.push(down);
+
+      const left = getNextCell("LEFT", row, col, grid);
+      left && children.push(left);
+
       break;
     }
     case "F": {
-      grid[row + 1]?.[col] && children.push(grid[row + 1][col]);
-      grid[row]?.[col + 1] && children.push(grid[row][col + 1]);
+      const down = getNextCell("DOWN", row, col, grid);
+      down && children.push(down);
+
+      const right = getNextCell("RIGHT", row, col, grid);
+      right && children.push(right);
+
       break;
     }
     case "S": {
-      grid[row + 1]?.[col] && children.push(grid[row + 1][col]);
-      grid[row - 1]?.[col] && children.push(grid[row - 1][col]);
-      grid[row]?.[col + 1] && children.push(grid[row][col + 1]);
-      grid[row]?.[col - 1] && children.push(grid[row][col - 1]);
+      const up = getNextCell("UP", row, col, grid);
+      up && children.push(up);
+
+      const down = getNextCell("DOWN", row, col, grid);
+      down && children.push(down);
+
+      const left = getNextCell("LEFT", row, col, grid);
+      left && children.push(left);
+
+      const right = getNextCell("RIGHT", row, col, grid);
+      right && children.push(right);
+
       break;
     }
   }
 
   return children;
+}
+
+function getNextCell(direction, row, col, grid) {
+  switch (direction) {
+    case "UP": {
+      if (
+        grid[row - 1]?.[col] &&
+        (grid[row - 1][col].pipe === "|" ||
+          grid[row - 1][col].pipe === "7" ||
+          grid[row - 1][col].pipe === "F")
+      ) {
+        return grid[row - 1][col];
+      }
+      break;
+    }
+    case "DOWN": {
+      if (
+        grid[row + 1]?.[col] &&
+        (grid[row + 1][col].pipe === "|" ||
+          grid[row + 1][col].pipe === "L" ||
+          grid[row + 1][col].pipe === "J")
+      ) {
+        return grid[row + 1][col];
+      }
+      break;
+    }
+    case "RIGHT": {
+      if (
+        grid[row]?.[col + 1] &&
+        (grid[row][col + 1].pipe === "-" ||
+          grid[row][col + 1].pipe === "7" ||
+          grid[row][col + 1].pipe === "J")
+      ) {
+        return grid[row][col + 1];
+      }
+      break;
+    }
+    case "LEFT": {
+      if (
+        grid[row]?.[col - 1] &&
+        (grid[row][col - 1].pipe === "-" ||
+          grid[row][col - 1].pipe === "F" ||
+          grid[row][col - 1].pipe === "L")
+      ) {
+        return grid[row][col - 1];
+      }
+      break;
+    }
+  }
+  return undefined;
 }
 
 function printGrid(grid) {
@@ -140,7 +221,8 @@ function printGrid(grid) {
       }
 
       colors += `${C[(cell.distance - 1) % C.length]}%s${COLORS.RESET}`;
-      str.push(cell.pipe);
+      // colors += `${COLORS.RED}%s${COLORS.RESET}`;
+      str.push(cell.distance);
     }
     console.log(colors, ...str);
   }

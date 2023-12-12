@@ -203,32 +203,35 @@ function getNextCell(direction, row, col, grid) {
 function printGrid(startCell, grid) {
   const PATH_COLORS = [
     COLORS.RED,
-    COLORS.YELLOW,
     COLORS.GREEN,
+    COLORS.YELLOW,
     COLORS.BLUE,
     COLORS.CYAN,
     COLORS.MAGENTA,
   ];
+  const PATH_MAPPER = {
+    "|": "║",
+    "-": "═",
+    L: "╚",
+    J: "╝",
+    7: "╗",
+    F: "╔",
+    S: "S",
+    ".": ".",
+  };
   const paths = getPaths(startCell, grid);
   for (let r = 0; r < grid.length; r++) {
     let colors = "";
     const str = [];
     for (let c = 0; c < grid[0].length; c++) {
-      let found = false;
       const cell = grid[r][c];
+      const ui = PATH_MAPPER[cell.pipe];
+      const foundIndex = paths.findIndex((path) => path.find((c) => c === cell));
 
-      for (let i = 0; i < paths.length; i++) {
-        if (!paths[i].find((c) => c === cell)) continue;
-        found = true;
-        colors += `${PATH_COLORS[i % PATH_COLORS.length]}%s${COLORS.RESET}`;
-        str.push(cell.pipe);
-        break;
-      }
-
-      if (found) continue;
-
-      colors += `${COLORS.BLACK}%s${COLORS.RESET}`;
-      str.push(cell.pipe);
+      colors += `${
+        foundIndex >= 0 ? PATH_COLORS[foundIndex % PATH_COLORS.length] : COLORS.BLACK
+      }%s${COLORS.RESET}`;
+      str.push(ui);
     }
     console.log(colors, ...str);
   }

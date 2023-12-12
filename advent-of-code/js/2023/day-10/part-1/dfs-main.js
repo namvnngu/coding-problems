@@ -56,7 +56,7 @@ while (stack.length !== 0) {
 }
 //#endregion DFS
 
-printGrid(startCell, path, grid);
+// printGrid(path, grid);
 console.log("Result:", path.length / 2);
 
 function createCell(pipe, row, col) {
@@ -198,20 +198,28 @@ function getNextCell(direction, row, col, grid) {
   return undefined;
 }
 
-function printGrid(startCell, path, grid) {
+function printGrid(path, grid) {
+  const PATH_MAPPER = {
+    "|": "║",
+    "-": "═",
+    L: "╚",
+    J: "╝",
+    7: "╗",
+    F: "╔",
+    S: "S",
+    ".": ".",
+  };
   for (let r = 0; r < grid.length; r++) {
     let colors = "";
     const str = [];
     for (let c = 0; c < grid[0].length; c++) {
       const cell = grid[r][c];
+      const ui = PATH_MAPPER[cell.pipe];
 
-      if (path.find((c) => c === cell)) {
-        colors += `${COLORS.RED}%s${COLORS.RESET}`;
-        str.push(cell.pipe);
-      } else {
-        colors += `${COLORS.BLACK}%s${COLORS.RESET}`;
-        str.push(cell.pipe);
-      }
+      colors += `${path.find((c) => c === cell) ? COLORS.RED : COLORS.BLACK}%s${
+        COLORS.RESET
+      }`;
+      str.push(ui);
     }
     console.log(colors, ...str);
   }

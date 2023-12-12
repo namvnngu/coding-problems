@@ -130,16 +130,28 @@ function getChildren(cell, grid) {
     }
     case "S": {
       const up = getNextCell("UP", row, col, grid);
-      up && children.push(up);
+      if (up) {
+        children.push(up);
+        break;
+      }
 
       const down = getNextCell("DOWN", row, col, grid);
-      down && children.push(down);
+      if (down) {
+        children.push(down);
+        break;
+      }
 
       const left = getNextCell("LEFT", row, col, grid);
-      left && children.push(left);
+      if (left) {
+        children.push(left);
+        break;
+      }
 
       const right = getNextCell("RIGHT", row, col, grid);
-      right && children.push(right);
+      if (right) {
+        children.push(right);
+        break;
+      }
 
       break;
     }

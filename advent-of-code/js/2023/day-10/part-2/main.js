@@ -86,7 +86,7 @@ for (let r = 0; r < grid.length; r++) {
   }
 }
 
-printGrid(grid);
+// printGrid(grid);
 console.log("Result:", result);
 
 function createCell(pipe, row, col) {

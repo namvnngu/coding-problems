@@ -37,8 +37,8 @@ const { startCell, grid } = (() => {
 
 // #region Find path
 const stack = [startCell];
-const path = [startCell];
 startCell.visited = true;
+startCell.inPath = true;
 
 while (stack.length !== 0) {
   const parent = stack.pop();
@@ -47,22 +47,46 @@ while (stack.length !== 0) {
     if (child.visited) continue;
 
     child.visited = true;
-
+    child.distance = parent.distance + 1;
+    child.inPath = true;
     stack.push(child);
-    path.push(child);
-  }
-}
-// #endregion Find path
-//
-let result = 0;
-for (let r = 0; r < grid.length; r++) {
-  for (let c = 0; c < grid[0].length; c++) {
-    if (grid[r][c].visited) continue;
-    result++;
   }
 }
 
-printGrid(path, grid);
+// #endregion Find path
+
+let result = 0;
+
+for (let r = 0; r < grid.length; r++) {
+  // https://en.wikipedia.org/wiki/Nonzero-rule
+  let windingNumber = undefined;
+
+  for (let c = 0; c < grid[0].length; c++) {
+    const curr = grid[r][c];
+    const below = grid[r + 1]?.[c];
+
+    if (curr.inPath && below?.inPath) {
+      if (curr.distance - below.distance === 1) {
+        windingNumber ??= 0;
+        windingNumber += 1;
+      } else if (curr.distance - below.distance === -1) {
+        windingNumber ??= 0;
+        windingNumber -= 1;
+      }
+    }
+
+    if (
+      !curr.visited &&
+      typeof windingNumber === "number" &&
+      windingNumber !== 0
+    ) {
+      result++;
+      curr.inside = true;
+    }
+  }
+}
+
+printGrid(grid);
 console.log("Result:", result);
 
 function createCell(pipe, row, col) {
@@ -70,7 +94,10 @@ function createCell(pipe, row, col) {
     pipe,
     row,
     col,
+    distance: 0,
     visited: false,
+    inPath: false,
+    inside: false,
   };
 }
 
@@ -135,16 +162,28 @@ function getChildren(cell, grid) {
     }
     case "S": {
       const up = getNextCell("UP", row, col, grid);
-      up && children.push(up);
+      if (up) {
+        children.push(up);
+        break;
+      }
 
       const down = getNextCell("DOWN", row, col, grid);
-      down && children.push(down);
+      if (down) {
+        children.push(down);
+        break;
+      }
 
       const left = getNextCell("LEFT", row, col, grid);
-      left && children.push(left);
+      if (left) {
+        children.push(left);
+        break;
+      }
 
       const right = getNextCell("RIGHT", row, col, grid);
-      right && children.push(right);
+      if (right) {
+        children.push(right);
+        break;
+      }
 
       break;
     }
@@ -203,7 +242,7 @@ function getNextCell(direction, row, col, grid) {
   return undefined;
 }
 
-function printGrid(path, grid) {
+function printGrid(grid) {
   const PATH_MAPPER = {
     "|": "║",
     "-": "═",
@@ -222,9 +261,9 @@ function printGrid(path, grid) {
       const ui = PATH_MAPPER[cell.pipe];
       let color = COLORS.BLACK;
 
-      if (path.find((c) => c === cell)) {
+      if (cell.inPath) {
         color = COLORS.RED;
-      } else if (cell.visited) {
+      } else if (cell.inside) {
         color = COLORS.GREEN;
       }
       colors += `${color}%s${COLORS.RESET}`;

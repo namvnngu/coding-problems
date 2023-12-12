@@ -1,9 +1,6 @@
 import { readFileSync } from "fs";
 
-const data = readFileSync("test.txt", "utf8");
-console.log(data);
-console.log("Result:");
-
+// #region MY UTILS
 function sum(numbers) {
   return numbers.reduce((accumulator, curr) => accumulator + curr, 0);
 }
@@ -16,7 +13,7 @@ function lcm(a, b) {
   return (a * b) / gcd(a, b);
 }
 
-var COLORS = {
+const COLORS = {
   RED: "\x1b[31m",
   GREEN: "\x1b[32m",
   YELLOW: "\x1b[33m",
@@ -36,3 +33,8 @@ function print(color, message) {
   const colorized = colorize(color, message);
   console.log(colorized.template, colorized.message);
 }
+// #endregion MY UTILS
+
+const data = readFileSync("test.txt", "utf8");
+console.log(data);
+console.log("Result:");

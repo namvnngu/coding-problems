@@ -52,7 +52,6 @@ while (stack.length !== 0) {
     stack.push(child);
   }
 }
-
 // #endregion Find path
 
 let result = 0;

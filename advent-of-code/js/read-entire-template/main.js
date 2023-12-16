@@ -5,6 +5,10 @@ function sum(numbers) {
   return numbers.reduce((accumulator, curr) => accumulator + curr, 0);
 }
 
+function asciiDec(char) {
+  return char.charCodeAt(0);
+}
+
 function gcd(a, b) {
   return a ? gcd(b % a, a) : b;
 }

@@ -42,6 +42,7 @@ function print(color, message) {
 const platform = readFileSync("input.txt", "utf8")
   .split("\n")
   .map((x) => x.split(""));
+platform.pop();
 
 const ROUNDED_ROCK = "O";
 const CUBE_SHAPED_ROCK = "#";
@@ -72,7 +73,7 @@ for (let r = 0; r < platform.length; r++) {
       roundedRockCount++;
     }
   }
-  result += roundedRockCount * (platform.length - r - 1);
+  result += roundedRockCount * (platform.length - r);
 }
 
 console.log("Result:", result);

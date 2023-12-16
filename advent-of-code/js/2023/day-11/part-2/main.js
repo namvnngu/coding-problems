@@ -38,7 +38,7 @@ function print(color, message) {
 const data = readFileSync("input.txt", "utf8").split("\n");
 data.pop();
 
-const EXTRA_STEP = 2;
+const EXTRA_STEP = 1000000;
 const GALAXY = "#";
 
 const galaxyLocations = (() => {

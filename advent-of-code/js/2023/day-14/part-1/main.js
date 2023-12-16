@@ -39,7 +39,7 @@ function print(color, message) {
 }
 // #endregion MY UTILS
 
-const rocks = readFileSync("input.txt", "utf8")
+const platform = readFileSync("input.txt", "utf8")
   .split("\n")
   .map((x) => x.split(""));
 
@@ -48,17 +48,17 @@ const CUBE_SHAPED_ROCK = "#";
 const EMPTY_SPACE = ".";
 
 const tilted = (() => {
-  for (let c = 0; c < rocks[0].length; c++) {
+  for (let c = 0; c < platform[0].length; c++) {
     let lastRow = 0;
-    for (let r = 0; r < rocks.length; r++) {
-      const rock = rocks[r][c];
+    for (let r = 0; r < platform.length; r++) {
+      const rock = platform[r][c];
 
       if (rock === CUBE_SHAPED_ROCK) {
         lastRow = r + 1;
       } else if (rock === ROUNDED_ROCK) {
-        const temp = rocks[lastRow][c];
-        rocks[lastRow][c] = rocks[r][c];
-        rocks[r][c] = temp;
+        const temp = platform[lastRow][c];
+        platform[lastRow][c] = platform[r][c];
+        platform[r][c] = temp;
         lastRow += 1;
       }
     }
@@ -66,15 +66,15 @@ const tilted = (() => {
 })();
 
 let result = 0;
-for (let r = 0; r < rocks.length; r++) {
+for (let r = 0; r < platform.length; r++) {
   let roundedRockCount = 0;
-  for (let c = 0; c < rocks[0].length; c++) {
-    const rock = rocks[r][c];
+  for (let c = 0; c < platform[0].length; c++) {
+    const rock = platform[r][c];
     if (rock === ROUNDED_ROCK) {
       roundedRockCount++;
     }
   }
-  result += roundedRockCount * (rocks.length - r - 1);
+  result += roundedRockCount * (platform.length - r - 1);
 }
 
 console.log("Result:", result);

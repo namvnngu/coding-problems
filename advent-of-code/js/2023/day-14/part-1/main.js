@@ -47,23 +47,21 @@ const ROUNDED_ROCK = "O";
 const CUBE_SHAPED_ROCK = "#";
 const EMPTY_SPACE = ".";
 
-const tilted = (() => {
-  for (let c = 0; c < platform[0].length; c++) {
-    let lastRow = 0;
-    for (let r = 0; r < platform.length; r++) {
-      const rock = platform[r][c];
+for (let c = 0; c < platform[0].length; c++) {
+  let lastRow = 0;
+  for (let r = 0; r < platform.length; r++) {
+    const rock = platform[r][c];
 
-      if (rock === CUBE_SHAPED_ROCK) {
-        lastRow = r + 1;
-      } else if (rock === ROUNDED_ROCK) {
-        const temp = platform[lastRow][c];
-        platform[lastRow][c] = platform[r][c];
-        platform[r][c] = temp;
-        lastRow += 1;
-      }
+    if (rock === CUBE_SHAPED_ROCK) {
+      lastRow = r + 1;
+    } else if (rock === ROUNDED_ROCK) {
+      const temp = platform[lastRow][c];
+      platform[lastRow][c] = platform[r][c];
+      platform[r][c] = temp;
+      lastRow += 1;
     }
   }
-})();
+}
 
 let result = 0;
 for (let r = 0; r < platform.length; r++) {

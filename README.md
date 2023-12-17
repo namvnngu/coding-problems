@@ -1,57 +1,15 @@
-<p align="center">
-    <img src="img/CP.svg" />
-</p>
-<p align="center">
-    <a href="https://codeforces.com/" target="_blank">
-        <img src="https://img.shields.io/badge/-CodeForces-blue" style="margin: 0 2.5px">
-    </a>
-    <a href="https://atcoder.jp/" target="_blank">
-        <img src="https://img.shields.io/badge/-AtCoder-lightgrey" style="margin: 0 2.5px">
-    </a>
-    <a href="https://leetcode.com/" target="_blank">
-        <img src="https://img.shields.io/badge/-LeetCode-yellowgreen" style="margin: 0 2.5px">
-    </a>
-    <a href="https://codingcompetitions.withgoogle.com/" target="_blank">
-        <img src="https://img.shields.io/badge/-Google-red" style="margin: 0 2.5px">
-    </a>
-    <a href="https://binarysearch.com/" target="_blank">
-        <img src="https://img.shields.io/badge/-Binary-yellow" style="margin: 0 2.5px">
-    </a>
-    <a href="https://www.hackerearth.com/" target="_blank">
-        <img src="https://img.shields.io/badge/-HackerEarth-9cf" style="margin: 0 2.5px">
-    </a>
-    <a href="https://adventofcode.com/" target="_blank">
-        <img src="https://img.shields.io/badge/-Advent of Code-00cc00" style="margin: 0 2.5px">
-    </a>
-</p>
+<img align="right" src="img/CP.svg" />
+
+[![AdventOfCode](https://img.shields.io/badge/-Advent_of_Code-FFFF66?logo=adventofcode&logoColor=FFFFFF)](https://codeforces.com/)
+[![Codeforces](https://img.shields.io/badge/-Codeforces-1F8ACB?logo=codeforces&logoColor=FFFFFF)](https://codeforces.com/)
+[![LeetCode](https://img.shields.io/badge/-LeetCode-FFA116?logo=leetcode&logoColor=FFFFFF)](https://leetcode.com/)
+[![AtCoder](https://img.shields.io/badge/-AtCoder-000000)](https://atcoder.jp/)
+[![Google](https://img.shields.io/badge/-Google-4285F4?logo=google&logoColor=FFFFFF)](https://codingcompetitions.withgoogle.com/)
+[![HackerEarth](https://img.shields.io/badge/-HackerEarth-2C3454?logo=hackerearth&logoColor=FFFFFF)](https://www.hackerearth.com/)
+[![HackerRank](https://img.shields.io/badge/-HackerRank-00EA64?logo=hackerrank&logoColor=FFFFFF)](https://www.hackerrank.com/)
 
 Hi. Welcome to my collection of coding problems that I solved on several online programming platforms.
 
 This repository takes snapshots of my progress of practicing coding problems and attending online contests.
 
-This repository is welcome to all contributions. If you find out any mistakes or would like to improve any implementations or solutions, please free to amke any pull requests. :star:
-
 Made by Nam with ❤️
-
-<!--
-    <h2>Some problems are categorized into topics</h2>
-
-    · [#dynamic-programming](#dynamic-programming)
-    · [#geometry](#geometry)
-    · [#math](#math)
-    · [#brute-force](#brute-force)
-    · [#divide-and-conquer](#divide-and-conquer) 
-    · [#greedy](#greedy) 
-    · [#data-struture](#data-struture) 
-    · [#miscellaneous](#miscellaneous)
-
-    <h3 id="dynamic-programming">Dynamic Programming</h3>
-    <h3 id="geometry">Geometry</h3>
-    <h3 id="math">Math</h3>
-    <h3 id="brute-force">Brute-force</h3>
-    <h3 id="divide-and-conquer">Divide-and-Conquer</h3>
-    <h3 id="grah">Graph</h3>
-    <h3 id="greedy">Greedy</h3>
-    <h3 id="data-struture">Data Structure</h3>
-    <h3 id="miscellaneous">Miscellaneous</h3>
---!>

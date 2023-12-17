@@ -6,6 +6,8 @@
 [![AtCoder](https://img.shields.io/badge/-AtCoder-000000)](https://atcoder.jp/)
 [![HackerEarth](https://img.shields.io/badge/-HackerEarth-2C3454?logo=hackerearth&logoColor=FFFFFF)](https://www.hackerearth.com/)
 [![HackerRank](https://img.shields.io/badge/-HackerRank-00EA64?logo=hackerrank&logoColor=FFFFFF)](https://www.hackerrank.com/)
+[![Type Challenges](https://img.shields.io/badge/-Type_Challenges-3178C6?logo=typescript&logoColor=FFFFFF)](https://github.com/type-challenges/type-challenges/)
+[![CSES](https://img.shields.io/badge/-CSES-FFD996)](https://cses.fi/)
 
 Hi. Welcome to my collection of coding problems that I solved on several online programming platforms.
 

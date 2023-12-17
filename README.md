@@ -4,7 +4,6 @@
 [![Codeforces](https://img.shields.io/badge/-Codeforces-1F8ACB?logo=codeforces&logoColor=FFFFFF)](https://codeforces.com/)
 [![LeetCode](https://img.shields.io/badge/-LeetCode-FFA116?logo=leetcode&logoColor=FFFFFF)](https://leetcode.com/)
 [![AtCoder](https://img.shields.io/badge/-AtCoder-000000)](https://atcoder.jp/)
-[![Google](https://img.shields.io/badge/-Google-4285F4?logo=google&logoColor=FFFFFF)](https://codingcompetitions.withgoogle.com/)
 [![HackerEarth](https://img.shields.io/badge/-HackerEarth-2C3454?logo=hackerearth&logoColor=FFFFFF)](https://www.hackerearth.com/)
 [![HackerRank](https://img.shields.io/badge/-HackerRank-00EA64?logo=hackerrank&logoColor=FFFFFF)](https://www.hackerrank.com/)
 

@@ -1,6 +1,6 @@
 <img align="right" src="img/CP.svg" />
 
-[![AdventOfCode](https://img.shields.io/badge/-Advent_of_Code-FFFF66?logo=adventofcode&logoColor=FFFFFF)](https://codeforces.com/)
+[![AdventOfCode](https://img.shields.io/badge/-Advent_of_Code-FFFF66?logo=adventofcode&logoColor=FFFFFF)](https://adventofcode.com/)
 [![Codeforces](https://img.shields.io/badge/-Codeforces-1F8ACB?logo=codeforces&logoColor=FFFFFF)](https://codeforces.com/)
 [![LeetCode](https://img.shields.io/badge/-LeetCode-FFA116?logo=leetcode&logoColor=FFFFFF)](https://leetcode.com/)
 [![AtCoder](https://img.shields.io/badge/-AtCoder-000000)](https://atcoder.jp/)

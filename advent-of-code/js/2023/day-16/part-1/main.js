@@ -43,7 +43,7 @@ function print(color, message) {
 const contraption = [];
 
 const lineReader = createInterface({
-  input: createReadStream("test.txt"),
+  input: createReadStream("input.txt"),
   rlfDelay: Infinity,
 });
 
@@ -77,7 +77,9 @@ lineReader.on("close", function () {
         continue;
       }
 
-      nextTile.nextDirectionsVisited = newNextDirections;
+      nextTile.nextDirectionsVisited = Array.from(
+        new Set([...newNextDirections, ...nextTile.nextDirectionsVisited]),
+      );
       queue.push(nextTile);
     }
   }

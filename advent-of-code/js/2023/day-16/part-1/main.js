@@ -1,5 +1,4 @@
-import { createInterface } from "readline";
-import { createReadStream } from "fs";
+import { readFileSync } from "fs";
 
 // #region MY UTILS
 function sum(numbers) {
@@ -40,170 +39,139 @@ function print(color, message) {
 }
 // #endregion MY UTILS
 
-const contraption = [];
+const contraption = readFileSync("input.txt", "utf8").split("\n");
+contraption.pop();
 
-const lineReader = createInterface({
-  input: createReadStream("input.txt"),
-  rlfDelay: Infinity,
-});
+const energized = getEnergized(
+  { row: 0, col: 0, direction: "RIGHT" },
+  contraption,
+);
+console.log("Result:", energized.length);
 
-lineReader.on("line", function (line) {
-  const row = [];
-  for (let i = 0; i < line.length; i++) {
-    row.push(createTile(line[i], contraption.length, i));
-  }
-  contraption.push(row);
-});
-
-lineReader.on("close", function () {
-  const startTile = contraption[0][0];
-  startTile.fromDirection = "LEFT";
-  startTile.nextDirectionsVisited = getNext(startTile, contraption).directions;
-
-  const queue = [startTile];
+function getEnergized(start, contraption) {
+  const queue = [start];
+  const visited = [];
 
   while (queue.length !== 0) {
-    const currentTile = queue.shift();
+    const beam = queue.shift();
 
-    for (const nextTile of getNext(currentTile, contraption).tiles) {
-      const newNextDirections = getNext(nextTile, contraption).directions;
+    if (
+      visited.find(
+        (b) =>
+          b.row === beam.row &&
+          b.col === beam.col &&
+          b.direction === beam.direction,
+      )
+    ) {
+      continue;
+    }
 
-      if (
-        newNextDirections.length === nextTile.nextDirectionsVisited.length &&
-        newNextDirections.every((d) =>
-          nextTile.nextDirectionsVisited.includes(d),
-        )
-      ) {
-        continue;
-      }
+    visited.push(beam);
 
-      nextTile.nextDirectionsVisited = Array.from(
-        new Set([...newNextDirections, ...nextTile.nextDirectionsVisited]),
-      );
-      queue.push(nextTile);
+    const nextBeams = getNextBeams(
+      beam,
+      contraption[beam.row][beam.col],
+      contraption.length,
+      contraption[0].length,
+    );
+    for (const nextBeam of nextBeams) {
+      queue.push(nextBeam);
     }
   }
 
-  // printContraption(contraption);
-
-  let result = 0;
-  for (let r = 0; r < contraption.length; r++) {
-    for (let c = 0; c < contraption[0].length; c++) {
-      const tile = contraption[r][c];
-      if (tile.fromDirection) {
-        result++;
-      }
-    }
+  const energized = {};
+  for (const { row, col } of visited) {
+    energized[`R${row}-C${col}`] = { row, col };
   }
-  console.log("Result:", result);
-});
-
-function createTile(value, row, col) {
-  return {
-    row,
-    col,
-    value,
-    fromDirection: undefined,
-    nextDirectionsVisited: [],
-  };
+  return Object.values(energized);
 }
 
-function getNext(tile, contraption) {
-  const top = contraption[tile.row - 1]?.[tile.col];
-  const bottom = contraption[tile.row + 1]?.[tile.col];
-  const left = contraption[tile.row]?.[tile.col - 1];
-  const right = contraption[tile.row]?.[tile.col + 1];
+function getNextBeams(beam, tile, maxRow, maxCol) {
+  const nextDirections = (() => {
+    switch (`${tile} ${beam.direction}`) {
+      case "| UP":
+      case "\\ LEFT":
+      case "/ RIGHT":
+      case ". UP": {
+        return ["UP"];
+      }
+      case "| DOWN":
+      case "\\ RIGHT":
+      case "/ LEFT":
+      case ". DOWN": {
+        return ["DOWN"];
+      }
+      case "- RIGHT":
+      case "\\ DOWN":
+      case "/ UP":
+      case ". RIGHT": {
+        return ["RIGHT"];
+      }
+      case "- LEFT":
+      case "\\ UP":
+      case "/ DOWN":
+      case ". LEFT": {
+        return ["LEFT"];
+      }
+      case "- UP":
+      case "- DOWN": {
+        return ["LEFT", "RIGHT"];
+      }
+      case "| RIGHT":
+      case "| LEFT": {
+        return ["UP", "DOWN"];
+      }
+      default: {
+        return [];
+      }
+    }
+  })();
 
-  const next = { tiles: [], directions: [] };
-
-  switch (`${tile.value} ${tile.fromDirection}`) {
-    case "| TOP":
-    case "\\ LEFT":
-    case "/ RIGHT":
-    case ". TOP": {
-      if (bottom) {
-        bottom.fromDirection = "TOP";
-        next.tiles.push(bottom);
-        next.directions.push("BOTTOM");
+  const nextBeams = [];
+  for (const direction of nextDirections) {
+    switch (direction) {
+      case "UP": {
+        if (beam.row > 0) {
+          nextBeams.push({
+            row: beam.row - 1,
+            col: beam.col,
+            direction: "UP",
+          });
+        }
+        break;
       }
-      break;
-    }
-    case "| BOTTOM":
-    case "\\ RIGHT":
-    case "/ LEFT":
-    case ". BOTTOM": {
-      if (top) {
-        top.fromDirection = "BOTTOM";
-        next.tiles.push(top);
-        next.directions.push("TOP");
+      case "DOWN": {
+        if (beam.row < maxRow - 1) {
+          nextBeams.push({
+            row: beam.row + 1,
+            col: beam.col,
+            direction: "DOWN",
+          });
+        }
+        break;
       }
-      break;
-    }
-    case "- LEFT":
-    case "\\ TOP":
-    case "/ BOTTOM":
-    case ". LEFT": {
-      if (right) {
-        right.fromDirection = "LEFT";
-        next.tiles.push(right);
-        next.directions.push("RIGHT");
+      case "LEFT": {
+        if (beam.col > 0) {
+          nextBeams.push({
+            row: beam.row,
+            col: beam.col - 1,
+            direction: "LEFT",
+          });
+        }
+        break;
       }
-      break;
-    }
-    case "- RIGHT":
-    case "\\ BOTTOM":
-    case "/ TOP":
-    case ". RIGHT": {
-      if (left) {
-        left.fromDirection = "RIGHT";
-        next.tiles.push(left);
-        next.directions.push("LEFT");
+      case "RIGHT": {
+        if (beam.col < maxCol - 1) {
+          nextBeams.push({
+            row: beam.row,
+            col: beam.col + 1,
+            direction: "RIGHT",
+          });
+        }
+        break;
       }
-      break;
-    }
-    case "- BOTTOM":
-    case "- TOP": {
-      if (left) {
-        left.fromDirection = "RIGHT";
-        next.tiles.push(left);
-        next.directions.push("LEFT");
-      }
-      if (right) {
-        right.fromDirection = "LEFT";
-        next.tiles.push(right);
-        next.directions.push("RIGHT");
-      }
-      break;
-    }
-    case "| RIGHT":
-    case "| LEFT": {
-      if (top) {
-        top.fromDirection = "BOTTOM";
-        next.tiles.push(top);
-        next.directions.push("TOP");
-      }
-      if (bottom) {
-        bottom.fromDirection = "TOP";
-        next.tiles.push(bottom);
-        next.directions.push("BOTTOM");
-      }
-      break;
     }
   }
-  return next;
-}
 
-function printContraption(contraption) {
-  for (let r = 0; r < contraption.length; r++) {
-    let row = "";
-    for (let c = 0; c < contraption[0].length; c++) {
-      const tile = contraption[r][c];
-      if (tile.fromDirection) {
-        row += "#";
-      } else {
-        row += ".";
-      }
-    }
-    console.log(row);
-  }
+  return nextBeams;
 }
